@@ -54,7 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\Fb2PlayerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -62,8 +62,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\Fb2PlayerView.xaml.cs">
+      <DependentUpon>Fb2PlayerView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -92,6 +92,47 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fb2PlayerCommon\Fb2PlayerCommon.csproj">
+      <Project>{955d0f27-78d1-4814-86ae-736285cc1dbd}</Project>
+      <Name>Fb2PlayerCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fb2PlayerViewModel\Fb2PlayerViewModel.csproj">
+      <Project>{1bbf1095-ffda-49ec-9180-935ba2798cc5}</Project>
+      <Name>Fb2PlayerViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Pictures\1downarrow.png" />
+    <Resource Include="View\Pictures\1downarrow1.png" />
+    <Resource Include="View\Pictures\1rightarrow.png" />
+    <Resource Include="View\Pictures\2leftarrow.png" />
+    <Resource Include="View\Pictures\2rightarrow.png" />
+    <Resource Include="View\Pictures\AddDataItem_32.bmp" />
+    <Resource Include="View\Pictures\AddNewItem_6273_32.bmp" />
+    <Resource Include="View\Pictures\AddTable_5632_32.bmp" />
+    <Resource Include="View\Pictures\agt_resume.png" />
+    <Resource Include="View\Pictures\Clearallrequests_8816.png" />
+    <Resource Include="View\Pictures\DeleteColumn_5627.png" />
+    <Resource Include="View\Pictures\detachprocess_6535.png" />
+    <Resource Include="View\Pictures\file.png" />
+    <Resource Include="View\Pictures\fileclose.png" />
+    <Resource Include="View\Pictures\folder.png" />
+    <Resource Include="View\Pictures\NewProperty_6860_32.bmp" />
+    <Resource Include="View\Pictures\player_eject.png" />
+    <Resource Include="View\Pictures\player_end.png" />
+    <Resource Include="View\Pictures\player_end1.png" />
+    <Resource Include="View\Pictures\player_fwd.png" />
+    <Resource Include="View\Pictures\player_pause.png" />
+    <Resource Include="View\Pictures\player_play.png" />
+    <Resource Include="View\Pictures\player_rew.png" />
+    <Resource Include="View\Pictures\player_start.png" />
+    <Resource Include="View\Pictures\player_stop.png" />
+    <Resource Include="View\Pictures\restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Pictures\Generatedfile_6428_24.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

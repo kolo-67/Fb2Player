@@ -5,6 +5,18 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fb2Player", "Fb2Player\Fb2Player.csproj", "{2B4DD367-4272-4F3E-8CF0-CC86CEC6F3D6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{0DC95852-E268-4977-AAB2-C02883F683B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModel", "ViewModel", "{C1B5B408-C946-4F8B-AECD-2CD63A866316}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F7400E50-8D1F-4CCD-A61E-F1FEF217CAA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fb2PlayerCommon", "Fb2PlayerCommon\Fb2PlayerCommon.csproj", "{955D0F27-78D1-4814-86AE-736285CC1DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fb2PlayerModel", "Fb2PlayerModel\Fb2PlayerModel.csproj", "{022DB43A-C34F-407F-9B86-DD1AC9CF2869}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fb2PlayerViewModel", "Fb2PlayerViewModel\Fb2PlayerViewModel.csproj", "{1BBF1095-FFDA-49EC-9180-935BA2798CC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +27,26 @@ Global
 		{2B4DD367-4272-4F3E-8CF0-CC86CEC6F3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B4DD367-4272-4F3E-8CF0-CC86CEC6F3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B4DD367-4272-4F3E-8CF0-CC86CEC6F3D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{955D0F27-78D1-4814-86AE-736285CC1DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{955D0F27-78D1-4814-86AE-736285CC1DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{955D0F27-78D1-4814-86AE-736285CC1DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{955D0F27-78D1-4814-86AE-736285CC1DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022DB43A-C34F-407F-9B86-DD1AC9CF2869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022DB43A-C34F-407F-9B86-DD1AC9CF2869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022DB43A-C34F-407F-9B86-DD1AC9CF2869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022DB43A-C34F-407F-9B86-DD1AC9CF2869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BBF1095-FFDA-49EC-9180-935BA2798CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BBF1095-FFDA-49EC-9180-935BA2798CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BBF1095-FFDA-49EC-9180-935BA2798CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BBF1095-FFDA-49EC-9180-935BA2798CC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{955D0F27-78D1-4814-86AE-736285CC1DBD} = {F7400E50-8D1F-4CCD-A61E-F1FEF217CAA0}
+		{022DB43A-C34F-407F-9B86-DD1AC9CF2869} = {0DC95852-E268-4977-AAB2-C02883F683B3}
+		{1BBF1095-FFDA-49EC-9180-935BA2798CC5} = {C1B5B408-C946-4F8B-AECD-2CD63A866316}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B1A76CC-324B-4C17-8D25-6E5BB348B426}
