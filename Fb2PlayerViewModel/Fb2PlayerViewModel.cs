@@ -329,6 +329,10 @@ namespace Fb2PlayerViewModel
         //-------------------------------------------------------------------------------------------------------------------
         private async void createAudioFileAction()
         {
+            ctsPlay = new CancellationTokenSource();
+            FileInfo fi = new FileInfo(SelectedTrak.FullName);
+            string file = SelectedTrak.FileName.Replace(Path.GetExtension(SelectedTrak.FullName), ".wav");
+            synthesizer.SetOutputToWaveFile(file);
             PromptBuilder promptBuilder = new PromptBuilder();
             ProcessDocument(promptBuilder, SelectedTrak.Paragraphs);
 
@@ -472,6 +476,7 @@ namespace Fb2PlayerViewModel
         //--------------------------------------------------------------------------------------------------------------------    
         public async Task StartPlay(bool isFromStart)
         {
+            synthesizer.SetOutputToDefaultAudioDevice();
             ICollectionView view = CollectionViewSource.GetDefaultView(SelectedTrak.Paragraphs);
             view.MoveCurrentToFirst();
 
