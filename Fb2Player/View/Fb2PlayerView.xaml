@@ -445,17 +445,17 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" ToolTip="Add folders" Command="{Binding CreateAudioFileCommand}">
+                    <Button Grid.Column="1" ToolTip="Save to file" Command="{Binding CreateAudioFileCommand}">
                         <Image Width="30" Height="30"  Source="Pictures\Generatedfile_6428_24.bmp"/>
                     </Button>
-                    <Button Grid.Column="2" ToolTip="Add files" Command="{Binding AddFilesCommand}">
+                    <Button Grid.Column="2" ToolTip="Save to file by Chapters" Command="{Binding CreateAudioFilesByChaptersCommand}">
+                        <Image Width="30" Height="30"  Source="Pictures\Generatedfile_6428_24.bmp"/>
+                    </Button>
+                    <Button Grid.Column="3" ToolTip="Add files" Command="{Binding AddFilesCommand}">
                         <Image Width="30" Height="30" Source="Pictures\AddDataItem_32.bmp"/>
                     </Button>
-                    <Button Grid.Column="3" ToolTip="Delete"  Command="{Binding DeleteFileCommand}">
+                    <Button Grid.Column="4" ToolTip="Delete"  Command="{Binding DeleteFileCommand}">
                         <Image Width="30" Height="30" Source="Pictures\detachprocess_6535.png"/>
-                    </Button>
-                    <Button Grid.Column="4" ToolTip="Delete Failed"  Command="{Binding DeleteFailedFileCommand}">
-                        <Image Width="30" Height="30" Source="Pictures\DeleteColumn_5627.png"/>
                     </Button>
                     <Button Grid.Column="5" ToolTip="Delete All"  Command="{Binding DeleteAllFileCommand}">
                         <Image Width="30" Height="30" Source="Pictures\DeleteColumn_5627.png"/>

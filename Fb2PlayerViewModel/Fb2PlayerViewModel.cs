@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace Fb2PlayerViewModel
 {
@@ -143,6 +144,20 @@ namespace Fb2PlayerViewModel
             {
                 sentencePause = value;
                 OnPropertyChanged("SentencePause");
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private int startToSavePosition;
+        public int StartToSavePosition
+        {
+            get
+            {
+                return startToSavePosition;
+            }
+            set
+            {
+                startToSavePosition = value;
+                OnPropertyChanged("StartToSavePosition");
             }
         }
         //-------------------------------------------------------------------------------------------------------------------
@@ -329,6 +344,10 @@ namespace Fb2PlayerViewModel
         //-------------------------------------------------------------------------------------------------------------------
         private async void createAudioFileAction()
         {
+            ctsPlay = new CancellationTokenSource();
+            FileInfo fi = new FileInfo(SelectedTrak.FullName);
+            string file = SelectedTrak.FileName.Replace(Path.GetExtension(SelectedTrak.FullName), ".wav");
+            synthesizer.SetOutputToWaveFile(file);
             PromptBuilder promptBuilder = new PromptBuilder();
             ProcessDocument(promptBuilder, SelectedTrak.Paragraphs);
 
@@ -349,6 +368,85 @@ namespace Fb2PlayerViewModel
         }
         //-------------------------------------------------------------------------------------------------------------------
         private bool CanAction()
+        {
+            return true;
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private ICommand createAudioFilesByChaptersCommand;
+        //-------------------------------------------------------------------------------------------------------------------
+        public ICommand CreateAudioFilesByChaptersCommand
+        {
+            get
+            {
+                if (createAudioFilesByChaptersCommand == null)
+                {
+                    createAudioFilesByChaptersCommand = new DelegateCommand(CreateCreateAudioFilesByChaptersAction, CanCreateAudioFilesByChaptersAction);
+                }
+                return createAudioFilesByChaptersCommand;
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private void CreateCreateAudioFilesByChaptersAction()
+        {
+            ctsPlay = new CancellationTokenSource();
+            FileInfo fi = new FileInfo(SelectedTrak.FullName);
+            List<List<string>> chapters = ReadDocXmlBychapters(fi);
+            for (int i = StartToSavePosition; i < chapters.Count; i++)
+            {
+                string file =  SelectedTrak.FileName.Replace(Path.GetExtension(SelectedTrak.FullName), $"_Chapter{i+1}.wav");
+                synthesizer.SetOutputToWaveFile(file);
+                PromptBuilder promptBuilder = new PromptBuilder();
+                ProcessDocument(promptBuilder, chapters[i]);
+
+                Prompt prompt = new Prompt(promptBuilder);
+
+                try
+                {
+                   synthesizer.Speak(prompt);
+                }
+                catch (OperationCanceledException oce)
+                {
+                    return;
+                }
+                catch (Exception ce)
+                {
+                    MessageBox.Show(ce.Message);
+                }
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private List<List<string>> ReadDocXmlBychapters(FileInfo fi)
+        {
+            List<List<string>> chapters = new List<List<string>>();
+
+            XElement rootElement = XElement.Load(fi.FullName);
+            XNamespace aw = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
+            List<string> currentChapters = new List<string>();
+
+            IEnumerable<XElement> paragraphElements = (from el in rootElement.Descendants(aw + "p") select el).ToList();
+            foreach (var p in paragraphElements)
+            {
+                IEnumerable<XElement> bookmarkStartElements = (from el in p.Elements(aw + "bookmarkStart") select el).ToList();
+                if (bookmarkStartElements.Count() > 0)
+                {
+                    if (currentChapters.Count > 0)
+                        chapters.Add(currentChapters);
+                    currentChapters = new List<string>();
+                }
+                IEnumerable<XElement> textElements = (from el in p.Descendants(aw + "t") select el).ToList();
+                foreach (var t in textElements)
+                    currentChapters.Add((string)t);
+            }
+
+            if (currentChapters.Count > 0)
+                chapters.Add(currentChapters);
+
+            return chapters;
+        }
+
+        //-------------------------------------------------------------------------------------------------------------------
+        private bool CanCreateAudioFilesByChaptersAction()
         {
             return true;
         }
@@ -472,6 +570,7 @@ namespace Fb2PlayerViewModel
         //--------------------------------------------------------------------------------------------------------------------    
         public async Task StartPlay(bool isFromStart)
         {
+            synthesizer.SetOutputToDefaultAudioDevice();
             ICollectionView view = CollectionViewSource.GetDefaultView(SelectedTrak.Paragraphs);
             view.MoveCurrentToFirst();
 
@@ -545,6 +644,65 @@ namespace Fb2PlayerViewModel
                 MessageBox.Show(ex.Message);
             }
 
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private ICommand deleteFileCommand;
+        //-------------------------------------------------------------------------------------------------------------------
+        public ICommand DeleteFileCommand
+        {
+            get
+            {
+                if (deleteFileCommand == null)
+                {
+                    deleteFileCommand = new DelegateCommand(DeleteFileAction, CanDeleteFileAction);
+                }
+                return deleteFileCommand;
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private void DeleteFileAction()
+        {
+            if (SelectedTrak != null )
+            {
+                Traks.Remove(SelectedTrak);
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private bool CanDeleteFileAction()
+        {
+            return true;
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private ICommand deleteAllFileCommand;
+        //-------------------------------------------------------------------------------------------------------------------
+        public ICommand DeleteAllFileCommand
+        {
+            get
+            {
+                if (deleteAllFileCommand == null)
+                {
+                    deleteAllFileCommand = new DelegateCommand(DeleteAllFileAction, CanDeleteAllFileAction);
+                }
+                return deleteAllFileCommand;
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private void DeleteAllFileAction()
+        {
+            if (MessageBox.Show("Are you sure?", "All track will be deleted.", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                var deletedTracks = Traks.ToList();
+
+                foreach (var track in deletedTracks)
+                {
+                    Traks.Remove(track);
+                }
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+        private bool CanDeleteAllFileAction()
+        {
+            return true;
         }
         //--------------------------------------------------------------------------------------------------------------------    
     }
