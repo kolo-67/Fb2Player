@@ -119,7 +119,7 @@ namespace Fb2PlayerViewModel
             FileInfo fi = new FileInfo(FullName);
             if (File.Exists(FullName))
             {
-                if (fi.Extension.ToUpper() == "FB2")
+                if (fi.Extension.ToUpper() == ".FB2")
                 {
                     XElement rootElement = XElement.Load(FullName);
                     IEnumerable<XElement> paragraphElements = (from el in rootElement.Descendants("p") select el).ToList();
